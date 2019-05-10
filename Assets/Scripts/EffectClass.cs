@@ -7,11 +7,19 @@ public abstract class EffectClass : ScriptableObject
     public Phase whenActivated; //the phase in which this effect can be activated
     public ActivationType activeType; //how often this effect is activated
     public List<Condition> conditions; //conditions to be met.
-    public bool activated; //if the card has already been activated, and cannot be activated again until further specification
+    public bool activated = false; //if the card has already been activated, and cannot be activated again until further specification
     public CardClass EffectedCard;
+    public activePlayer target;
     public Places targetArea;
+    public EffectSum effSum;
     public abstract void doEffect();
+    public void resetActivaton()
+    {
+        activated = false;
+    }
 }
+
+
 
 [CreateAssetMenu(fileName = "ChangeATK", menuName = "Custom/Effects/ChangeATK", order = 1)]
 public class ChangeATK : EffectClass

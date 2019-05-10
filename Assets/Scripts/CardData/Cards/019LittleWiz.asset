@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 082f0e6804208864295f55c97e115621, type: 3}
   m_Name: 019LittleWiz
   m_EditorClassIdentifier: 
-  CardName: Default
+  CardName: Little Wizard
   CardNumber: 19
   type: 0
   Tier: 1
-  Health: -200
+  Health: 200
   Attack: 400
   cardModel: {fileID: 4300870879561772522, guid: 377e57eebbc264a4ba96c94b1660e6fa,
     type: 3}

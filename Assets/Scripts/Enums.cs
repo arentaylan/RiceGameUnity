@@ -20,6 +20,11 @@ public enum activePlayer
     Player, Enemy
 }
 
+public enum EffectSum
+{
+    ChangeNum, Discard, SearchDeck
+}
+
 // fuck idk
 public enum CardElement
 {

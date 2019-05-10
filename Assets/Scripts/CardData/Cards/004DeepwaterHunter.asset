@@ -22,8 +22,8 @@ MonoBehaviour:
     type: 3}
   cardArt: {fileID: 21300000, guid: 9eaf2e3a8c17a64408f3ce2c6f6d45a9, type: 3}
   effects:
-  - {fileID: 11400000, guid: b5762bd9db7f8e54a92ccced98874e2c, type: 2}
-  - {fileID: 11400000, guid: fefcecd9b32befa4b9ea88609c54c150, type: 2}
+  - {fileID: 11400000, guid: 81b651cc59a15344bbe59eb63cebc751, type: 2}
+  - {fileID: 11400000, guid: 68ae8b0018bcd6740a9fc2644abb8b66, type: 2}
   FlavorText: When this card attacks or is attacked, this card gains 100 HP and 50
     ATK.
   element: 2

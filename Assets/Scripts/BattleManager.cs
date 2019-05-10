@@ -46,8 +46,18 @@ public class BattleManager : MonoBehaviour
     private float minHandX;
     private float maxHandX;
 
+    public GameObject questionPanel;
 
-    public Canvas battleCanvas;
+    private float phaseCD = 0.0f;
+    public float phaseCDmax = 5.0f; //change this number to lengthen or shorten phase cooldowns
+    public bool paused = false;
+
+
+    public GameObject battleCanvas;
+
+    public Text debugText1;
+    public Text debugText2;
+    public Text debugTextMiddle;
 
     private activePlayer whoPlays = activePlayer.Player;
     private Phase curPhase = Phase.Draw;
@@ -59,6 +69,28 @@ public class BattleManager : MonoBehaviour
     {
         NPC = Environment.fightingThis;
         Vector3 spwnPos = new Vector3(0, 0, 0);
+
+        Transform child = battleCanvas.transform.Find("debug1");
+        debugText1 = child.GetComponent<Text>();
+        debugText1.text = "LIFE = " + p2Life + " \nMonster = N/A";
+
+        child = battleCanvas.transform.Find("debug2");
+        debugText2 = child.GetComponent<Text>();
+        debugText2.text = "LIFE = " + p1Life + " \nMonster = N/A"; ;
+
+        child = battleCanvas.transform.Find("phase");
+        debugTextMiddle = child.GetComponent<Text>();
+        debugTextMiddle.text = "DEBUG TEXT TEST";
+
+        /*GameObject  bTexObj = new GameObject("myTextGO");
+        bTexObj.transform.SetParent(battleCanvas.transform);
+
+        Text debugText1 = bTexObj.AddComponent<Text>();
+        debugText1.text = "DEBUGTEXT 1";
+        bTexObj.SetActive(true);
+        bTexObj.transform.position = new Vector3(0.0f, 0.0f, 0.0f); */
+
+        //set the background/gorund of the field.
         if (place == "Field")
         {
            BG = Instantiate(forestBG);
@@ -69,7 +101,7 @@ public class BattleManager : MonoBehaviour
         }
         BG.transform.position = spwnPos;
 
-        var a = 0;
+        var a = 0; //set up each card deck
         foreach (CardClass card in NPC.Deck)
         {
             eDeck.Add(card);
@@ -157,58 +189,77 @@ public class BattleManager : MonoBehaviour
     {
         cardSel = Input.GetAxis("Horizontal");
         var f = 0.0f;
-        Debug.Log("Turn: " + whoPlays + "Phase: " + curPhase);
+        debugTextMiddle.text = " Turn: " + whoPlays + " Phase: " + curPhase;
         if (c1M != null)
         {
-            Debug.Log("P1 Monster: " + c1M.name + "\n P1 Health: " + c1M.Health + "\n P1 Attack: " + c1M.Attack);
+            debugText2.text = "LIFE = " +p1Life + " \nMonster = " + c1M.CardName + "\n HP: " + c1M.Health + " ATK: " + c1M.Attack;
             if(c1M.Health <= 0)
             {
+                Destroy(p1MonsterObj.GetComponent<Transform>());
                 Destroy(p1MonsterObj);
                 activeCards.Remove(c1M);
                 c1M = null;
                 p1Life--;
+                debugText2.text = "LIFE = " + p1Life + " \nMonster = N/A";
             }
         }
         if (c2M != null)
         {
-            Debug.Log("P2 Monster: " + c2M.name + "\n P2 Health: " + c2M.Health + "\n P2 Attack: " + c2M.Attack);
+            debugText1.text = "LIFE = " +p2Life + " \nMonster = " + c2M.CardName + "\n HP: " + c2M.Health + " ATK: " + c2M.Attack;
+
             if (c2M.Health <= 0)
             {
+                Destroy(p2MonsterObj.GetComponent<Transform>());
                 Destroy(p2MonsterObj);
                 activeCards.Remove(c2M);
                 c2M = null;
                 p2Life--;
+                debugText1.text = "LIFE = " + p2Life + " \nMonster = N/A";
             }
 
+        }
+
+        if (phaseCD != 0.0f) //PHASE COOLDOWN SCRIPT.
+        { // so it doesn't change rapidly
+            phaseCD -= Time.deltaTime;
+            if (phaseCD <= 0.0)
+            {
+                phaseCD = 0.0f;
+                paused = false;
+            }
         }
 
 
         //PLAYER
         if (whoPlays == activePlayer.Player)
         {
-            if(curPhase == Phase.Draw)
+            if (curPhase == Phase.Draw)
             {
-                pHand.Add(pDeck[0]);
-                var temp = pHand[pHand.Count-1];
-                pDeck.Remove(temp);
+                if (!paused)
+                { 
+                    pHand.Add(pDeck[0]);
+                    var temp = pHand[pHand.Count - 1];
+                    pDeck.Remove(temp);
 
-                checkEffects(Phase.Draw);
-                curPhase = Phase.Placement;
-                selection = 0;
+                    checkEffects(Phase.Draw);
+                    curPhase = Phase.Placement;
+                    phaseCD = phaseCDmax;
+                    selection = 0;
 
-                GameObject cardObject = new GameObject();
-                displayHand.Add(Instantiate(cardObject, battleCanvas.transform));
-                cardImage = displayHand[displayHand.Count-1].AddComponent<Image>();
-                cardImage.sprite = pHand[displayHand.Count - 1].cardArt;
-                displayHand[displayHand.Count - 1].SetActive(true);
-                Destroy(cardObject);
-                foreach (GameObject cimage in displayHand)
-                {
-                    cimage.transform.position = new Vector3(minHandX + (maxHandX / (displayHand.Count) * f), f, 0.0f);
-                    f += 1.0f;
-                    //
+                    GameObject cardObject = new GameObject();
+                    displayHand.Add(Instantiate(cardObject, battleCanvas.transform));
+                    cardImage = displayHand[displayHand.Count - 1].AddComponent<Image>();
+                    cardImage.sprite = pHand[displayHand.Count - 1].cardArt;
+                    displayHand[displayHand.Count - 1].SetActive(true);
+                    Destroy(cardObject);
+                    foreach (GameObject cimage in displayHand)
+                    {
+                        cimage.transform.position = new Vector3(minHandX + (maxHandX / (displayHand.Count) * f), f, 0.0f);
+                        f += 1.0f;
+                        //
+                    }
+                    displayHand[selection].transform.position = new Vector3(displayHand[selection].transform.position.x, 70.0f, displayHand[selection].transform.position.z);
                 }
-                displayHand[selection].transform.position = new Vector3(displayHand[selection].transform.position.x, 70.0f, displayHand[selection].transform.position.z);
             }
             else if (curPhase == Phase.Placement)
             {
@@ -250,8 +301,9 @@ public class BattleManager : MonoBehaviour
                         if (c1M == null) //if player doesnt alraedy have a monster out
                         {
                             //in future it will prompt but for now itll auto play
-                            c1M = pHand[selection];
-                            activeCards.Add(pHand[selection]);
+                            CardClass clone = Instantiate(pHand[selection]) as CardClass;
+                            c1M = clone;
+                            activeCards.Add(clone);
                             Destroy(displayHand[selection]);
                             displayHand.RemoveAt(selection);
                             pHand.RemoveAt(selection);
@@ -322,7 +374,15 @@ public class BattleManager : MonoBehaviour
 
                 if (Input.GetButtonDown("Next"))
                 {
-                    curPhase = Phase.Battle;
+                    if (phaseCD <= 0.0f)
+                    {
+                        curPhase = Phase.Battle;
+                        phaseCD = phaseCDmax;
+                    }
+                    else
+                    {
+                        Debug.Log("ERROR: Wait a bit to go to the next phase!");
+                    }
                 }
 
 
@@ -353,14 +413,28 @@ public class BattleManager : MonoBehaviour
 
                 else if(Input.GetButtonDown("Next"))
                 {
-                    curPhase = Phase.End;
+                    if (phaseCD <= 0.0f)
+                    {
+                        curPhase = Phase.End;
+                        phaseCD = phaseCDmax;
+                        paused = true;
+                    }
+                    else
+                    {
+                        Debug.Log("ERROR: Wait a bit to go to the next phase!");
+                    }
                 }
             }
             else if (curPhase == Phase.End)
             {
-                checkEffects(Phase.End);
-                whoPlays = activePlayer.Enemy;
-                curPhase = Phase.Draw;
+                if (!paused)
+                {
+                    checkEffects(Phase.End);
+                    whoPlays = activePlayer.Enemy;
+                    curPhase = Phase.Draw;
+                    paused = true;
+                    phaseCD = phaseCDmax;
+                }
             }
         }
         //ENEMY
@@ -368,99 +442,121 @@ public class BattleManager : MonoBehaviour
         {
             if (curPhase == Phase.Draw)
             {
-                eHand.Add(eDeck[0]);
-                var temp = eHand[0];
-                eDeck.Remove(temp);
-                checkEffects(Phase.Draw);
-                curPhase = Phase.Placement;
-                selection = 0;
-
+                if (!paused)
+                {
+                    eHand.Add(eDeck[0]);
+                    var temp = eHand[0];
+                    eDeck.Remove(temp);
+                    checkEffects(Phase.Draw);
+                    curPhase = Phase.Placement;
+                    selection = 0;
+                    phaseCD = phaseCDmax;
+                    paused = true;
+                }
             }
             else if (curPhase == Phase.Placement)
             {
-                if (c2M == null)
+                if (!paused)
                 {
-                    var a = 0;
-                    var found = false;
-                    foreach (CardClass card in eHand)
+                    if (c2M == null)
                     {
-                        if (card.type == CardType.Monster)
+                        var a = 0;
+                        var found = false;
+                        foreach (CardClass card in eHand)
                         {
-                            selection = a;
-                            found = true;
+                            if (card.type == CardType.Monster)
+                            {
+                                selection = a;
+                                found = true;
+                            }
+                            a++;
                         }
-                        a++;
-                    }
-                    if (!found)
-                    {
-                        curPhase = Phase.End;
-                    }
-                    else if(found)
-                    {
-                        c2M = eHand[selection];
-                        activeCards.Add(eHand[selection]);
-                        //Destroy(displayHand[selection]);
-                       // displayHand.RemoveAt(selection);
-                        eHand.RemoveAt(selection);
-                        checkEffects(Phase.Placement);
-                        p1MonsterObj = Instantiate(c2M.cardModel);
-                        p1MonsterObj.transform.position = p2M.transform.position;
-                        curPhase = Phase.Battle;
-                    }
-                }
-                else if (c2M != null)
-                {
-                    foreach (CardClass card in eHand) //use every action that it can use
-                    {
-                        foreach (EffectClass efs in card.effects)
+                        if (!found)
                         {
-                            if (card.type == CardType.Action)
-                            {
-                                efs.EffectedCard = setEnemyTargetCard(efs);
-                                efs.doEffect();
-                            }
-                            else
-                            {
-                                //normally this would mean dont let it activate.
-                            }
+                            phaseCD = phaseCDmax;
+                            paused = true;
+                            curPhase = Phase.End;
                         }
-                        //activate the card.
+                        else if (found)
+                        {
+                            CardClass clone = Instantiate(eHand[selection]) as CardClass;
+                            c2M = clone;
+                            activeCards.Add(clone);
+                            //Destroy(displayHand[selection]);
+                            // displayHand.RemoveAt(selection);
+                            eHand.RemoveAt(selection);
+                            checkEffects(Phase.Placement);
+                            p2MonsterObj = Instantiate(c2M.cardModel);
+                            p2MonsterObj.transform.position = p2M.transform.position;
+                            phaseCD = phaseCDmax;
+                            paused = true;
+                            curPhase = Phase.Battle;
+                        }
                     }
-                }
-
+                    else if (c2M != null)
+                    {
+                        foreach (CardClass card in eHand) //use every action that it can use
+                        {
+                            foreach (EffectClass efs in card.effects)
+                            {
+                                if (card.type == CardType.Action)
+                                {
+                                    efs.EffectedCard = setEnemyTargetCard(efs);
+                                    efs.doEffect();
+                                }
+                                else
+                                {
+                                    //normally this would mean dont let it activate.
+                                }
+                            }
+                            //activate the card.
+                        }
+                    }
+                    phaseCD = phaseCDmax;
+                    paused = true;
                     curPhase = Phase.Battle;
+                }
             }
             else if (curPhase == Phase.Battle)
             {
-                
-                if (true) //if AI has decided to go
+                if (!paused)
                 {
-                    //attack also choose left from right?
-                    //worry abt that later
-                    if (c2M != null && c1M != null)
+                    if (true) //if AI has decided to go
                     {
-                        c1M.Health -= c2M.Attack;
-                        checkEffects(Phase.Battle);
-                        curPhase = Phase.End;
+                        //attack also choose left from right?
+                        //worry abt that later
+                        if (c2M != null && c1M != null)
+                        {
+                            c1M.Health -= c2M.Attack;
+                            checkEffects(Phase.Battle);
+                            curPhase = Phase.End;
+                        }
+                        else
+                        {
+                            phaseCD = phaseCDmax;
+                            paused = true;
+                            curPhase = Phase.End;
+                            //attacking cannot happen
+                        }
                     }
                     else
                     {
+                        //if ai doesnt wanna go
                         curPhase = Phase.End;
-                        //attacking cannot happen
                     }
-                }
-                else
-                {
-                    //if ai doesnt wanna go
-                    curPhase = Phase.End;
                 }
 
             }
             else if (curPhase == Phase.End)
             {
-                checkEffects(Phase.End);
-                whoPlays = activePlayer.Player;
-                curPhase = Phase.Draw;
+                if (!paused)
+                {
+                    checkEffects(Phase.End);
+                    whoPlays = activePlayer.Player;
+                    curPhase = Phase.Draw;
+                    phaseCD = phaseCDmax;
+                    paused = true;
+                }
             }
         }
     }
@@ -540,10 +636,13 @@ public class BattleManager : MonoBehaviour
         {
             foreach (EffectClass ef in activeCard.effects)
             {
-                if (ef.whenActivated == phaseToCheck)
-                {
-                    ef.EffectedCard = setTargetCard(ef);
-                    ef.doEffect();
+                if (phaseToCheck != null)
+                { 
+                    if (ef.whenActivated == phaseToCheck)
+                    {
+                        ef.EffectedCard = setTargetCard(ef);
+                        ef.doEffect();
+                    }
                 }
             }
         }

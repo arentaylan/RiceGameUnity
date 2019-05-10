@@ -17,7 +17,7 @@ MonoBehaviour:
   type: 0
   Tier: 1
   Health: 100
-  Attack: -105900
+  Attack: 100
   cardModel: {fileID: 1864861001229504492, guid: e85b529aebfeb754c99a9c2a391cf039,
     type: 3}
   cardArt: {fileID: 21300000, guid: c68ca44aef7079c4e9781dd95bddadf0, type: 3}

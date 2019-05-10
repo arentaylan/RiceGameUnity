@@ -22,6 +22,6 @@ MonoBehaviour:
     type: 3}
   cardArt: {fileID: 21300000, guid: 0e6120b12797f5b4688359fde2029452, type: 3}
   effects:
-  - {fileID: 11400000, guid: e81ce849e69f2e849a035ae95b33f49b, type: 2}
+  - {fileID: 11400000, guid: 8bcca8dbd268f484395dc2773eda3103, type: 2}
   FlavorText: Decrease Enemy Monster's ATK by 100
   element: 0

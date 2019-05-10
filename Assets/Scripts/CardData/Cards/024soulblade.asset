@@ -22,6 +22,6 @@ MonoBehaviour:
     type: 3}
   cardArt: {fileID: 21300000, guid: 2fdf024f8b5893e4f8d6f97d54ac2229, type: 3}
   effects:
-  - {fileID: 11400000, guid: ed213168996d59c4697cfcb79c6e8fb2, type: 2}
+  - {fileID: 11400000, guid: 522c43ace355832428d48e95962a75e3, type: 2}
   FlavorText: Increase your monster's ATK by 300.
   element: 0

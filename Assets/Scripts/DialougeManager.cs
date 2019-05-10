@@ -66,7 +66,7 @@ public class DialougeManager : MonoBehaviour
         }
 
   
-        if(dialougePanel.activeSelf && talking) // this is some fuckshit so it's gonna be a bit of explanation
+        if(dialougePanel.activeSelf && talking) // this is some bizarre shit so it's gonna be a bit of explanation
         {
             prToScreen = dialougeLines[dialougeIndex].Substring(0, txtBuff); // this variable is whats being printed to the screen.
             scrlBuff++; // Using this variable and txtBuff, the substirng is slowly expanded untl it becomes the whole string.

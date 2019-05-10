@@ -18,6 +18,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 6622d3740e294c54685b831f623d4ab2, type: 2}
   activated: 0
   EffectedCard: {fileID: 0}
+  target: 1
   targetArea: 3
+  effSum: 0
   amt: 100
   add: 0

@@ -13,11 +13,12 @@ MonoBehaviour:
   m_Name: 004HP
   m_EditorClassIdentifier: Assembly-CSharp::ChangeHP
   whenActivated: 2
-  activeType: 4
-  conditions:
-  - {fileID: 11400000, guid: 6622d3740e294c54685b831f623d4ab2, type: 2}
+  activeType: 3
+  conditions: []
   activated: 0
   EffectedCard: {fileID: 0}
+  target: 0
   targetArea: 0
-  amt: 100
+  effSum: 0
+  amt: 50
   add: 1
