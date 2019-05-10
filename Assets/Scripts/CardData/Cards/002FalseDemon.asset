@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 082f0e6804208864295f55c97e115621, type: 3}
+  m_Name: 002FalseDemon
+  m_EditorClassIdentifier: 
+  CardName: False Demon
+  CardNumber: 2
+  type: 0
+  Tier: 1
+  Health: 100
+  Attack: -105900
+  cardModel: {fileID: 1864861001229504492, guid: e85b529aebfeb754c99a9c2a391cf039,
+    type: 3}
+  cardArt: {fileID: 21300000, guid: c68ca44aef7079c4e9781dd95bddadf0, type: 3}
+  effects:
+  - {fileID: 11400000, guid: b1d0f919561527648b7c1dda1bb5f50d, type: 2}
+  FlavorText: When this card is attacked, deal 100 damage to the attacker.
+  element: 1

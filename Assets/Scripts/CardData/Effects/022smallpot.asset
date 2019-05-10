@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 0}
+  m_Name: 022smallpot
+  m_EditorClassIdentifier: Assembly-CSharp::ChangeHP
+  whenActivated: 1
+  activeType: 0
+  conditions:
+  - {fileID: 11400000, guid: 6622d3740e294c54685b831f623d4ab2, type: 2}
+  activated: 0
+  EffectedCard: {fileID: 11400000, guid: ba9f54bb777603041b08fd1a398e7110, type: 2}
+  targetArea: 0
+  amt: 100
+  add: 1

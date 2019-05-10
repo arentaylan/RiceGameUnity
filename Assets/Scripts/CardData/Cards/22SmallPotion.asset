@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 082f0e6804208864295f55c97e115621, type: 3}
+  m_Name: 22SmallPotion
+  m_EditorClassIdentifier: 
+  CardName: Small Potion
+  CardNumber: 22
+  type: 1
+  Tier: 1
+  Health: 1
+  Attack: 1
+  cardModel: {fileID: 4300870879561772522, guid: 377e57eebbc264a4ba96c94b1660e6fa,
+    type: 3}
+  cardArt: {fileID: 21300000, guid: 51328ff36e6aad046a957099fc1edc10, type: 3}
+  effects:
+  - {fileID: 11400000, guid: 990f2ff0bcb0e6046a2fca06b285e85e, type: 2}
+  FlavorText: Your monster gains 100 HP
+  element: 0

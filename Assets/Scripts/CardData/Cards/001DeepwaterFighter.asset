@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 082f0e6804208864295f55c97e115621, type: 3}
+  m_Name: 001DeepwaterFighter
+  m_EditorClassIdentifier: 
+  CardName: Deepwater Fighter
+  CardNumber: 1
+  type: 0
+  Tier: 1
+  Health: 300
+  Attack: 400
+  cardModel: {fileID: 4235771646473166727, guid: bacf59ff3c4f32d42b1b772af02d669d,
+    type: 3}
+  cardArt: {fileID: 21300000, guid: abad2fc0125ca8e43b5f56e0b0b6f378, type: 3}
+  effects:
+  - {fileID: 11400000, guid: 8d6043179771fde42b5c881dfddec78a, type: 2}
+  FlavorText: Gain 50 HP at the end of each turn.
+  element: 2
